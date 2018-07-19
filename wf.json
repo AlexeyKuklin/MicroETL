@@ -69,6 +69,7 @@
    "tasks" : [
      {
         "id": 1,
+        "type": "db_db",
         "chunk_size": 10000,
         "src_conn"  : "conn_Oracle_1",
         "src_table" : "schema.table",
@@ -80,7 +81,8 @@
  
 
      {
-        "id": 3,
+        "id": 2,
+        "type": "csv_db",
         "chunk_size": 200,
         "csv_file"  : "in.csv",
         "delimiter" : ";",
@@ -92,7 +94,8 @@
 
 
      {
-        "id": 4,
+        "id": 3,
+        "type": "db_csv",
         "chunk_size": 10000,
         "src_conn"  : "conn_Oracle_1",
         "src_table" : "",

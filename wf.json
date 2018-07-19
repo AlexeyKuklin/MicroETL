@@ -1,0 +1,107 @@
+{
+   "max_tasks":3,
+
+   "dsn" : {
+         "DSN1" :
+           "(DESCRIPTION = \
+              (ADDRESS_LIST = \
+              (ADDRESS = (PROTOCOL = TCP)(HOST = HOST1)(PORT = 1521)) \
+              ) \
+              (CONNECT_DATA = \
+                 (SERVER = DEDICATED) \
+                 (SERVICE_NAME = SERVICE1) \
+              ) \
+           )",
+
+         "DSN2" : 
+          "(DESCRIPTION = \
+            (ADDRESS_LIST = \
+            (ADDRESS = (PROTOCOL = TCP)(HOST = HOST2)(PORT = 1521)) \
+            ) \
+            (CONNECT_DATA = \
+            (SERVER = DEDICATED) \
+            (SERVICE_NAME = SERVICE2) \
+           ))"
+   },
+
+   "connections" : {
+       "conn_Oracle_1" : {
+          "type"    : "Oracle",
+          "dsn"     : "DSN1", 
+          "user"    : "user",
+          "password": "pass",
+          "encoding": "UTF-8"
+       },
+
+
+       "conn_Oracle_2" : {
+          "type"    : "Oracle",
+          "dsn"     : "DSN2", 
+          "user"    : "user",
+          "password": "pass",
+          "encoding": "UTF-8"
+       },
+
+    
+       "conn_PostgresQL" : {
+          "type"    : "PostgresQL",
+          "host"    : "ssmlpgsql",
+          "dbname"  : "postgres",
+          "port"    : 5432,
+          "user"    : "user",
+          "password": "pass"
+       },
+
+
+       "conn_MSSQL" : {
+          "type"     : "MSSQL",
+          "driver"   : "ODBC Driver 13 for SQL Server",
+          "server"   : "server_MSSQL", 
+          "port"     : "",
+          "database" : "database",
+          "trusted_connection": "yes", 
+          "username" : "myusername", 
+          "password" : "mypassword"
+       }
+
+    },
+
+   "tasks" : [
+     {
+        "id": 1,
+        "chunk_size": 10000,
+        "src_conn"  : "conn_Oracle_1",
+        "src_table" : "schema.table",
+        "src_query" : "",
+        "dst_conn"  : "conn_MSSQL",
+        "dst_table" : "database.dbo.table",
+        "dst_query" : ""
+     },
+ 
+
+     {
+        "id": 3,
+        "chunk_size": 200,
+        "csv_file"  : "in.csv",
+        "delimiter" : ";",
+        "quotechar" : "^",
+        "format"    : { "THIS_DATE_FIELD" : "YYYY/MM/DD HH24:MI:SS"},
+        "dst_conn"  : "conn_Oracle_1",
+        "dst_table" : "schema.table"
+     },
+
+
+     {
+        "id": 4,
+        "chunk_size": 10000,
+        "src_conn"  : "conn_Oracle_1",
+        "src_table" : "",
+        "src_query" : "select * from schema.table where rownum <= 100000",
+        "csv_file"  : "out.csv",
+        "header"    : "False",
+        "delimiter" : ";",
+        "quotechar" : '"',
+        "format"    : { "THIS_DATE_FIELD" : "YYYY-MM-DD HH24:MI:SS"}
+     }
+   ]
+}

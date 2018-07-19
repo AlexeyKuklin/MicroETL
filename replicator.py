@@ -320,11 +320,8 @@ def main():
     workflow = json.load(open('wf.json', 'r'))
     task = workflow['tasks'][0]
 
-    try:
-        f = getattr(sys.modules[__name__], task["type"])
-        f((workflow, task))
-    except e:
-        raise ValueError('Unknown task type')
+    f = getattr(sys.modules[__name__], task["type"])
+    f((workflow, task))
 
 
 if __name__ == "__main__":

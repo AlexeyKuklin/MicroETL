@@ -100,7 +100,7 @@
         "csv_file"  : "out.csv",
         "header"    : "False",
         "delimiter" : ";",
-        "quotechar" : '"',
+        "quotechar" : "\"",
         "format"    : { "THIS_DATE_FIELD" : "YYYY-MM-DD HH24:MI:SS"}
      }
    ]
